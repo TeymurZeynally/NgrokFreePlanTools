@@ -1,0 +1,22 @@
+NgrokPath: ngrok
+NgrokWorkingDirectory: .
+NgrokArguments: tcp 1234
+CurlPath: curl
+CurlWorkingDirectory: .
+CurlArguments: |
+  -X PUT https://endpoint.dev -H "Authorization:12345" -d "{ \"address\": \"{{Address}}\" }"
+
+Serilog:
+  Using:
+    - Serilog.Sinks.Console
+    - Serilog.Sinks.File
+  MinimumLevel: Debug
+  WriteTo:
+    - Name: Console
+    - Name: File
+      Args:
+        rollingInterval: Day
+        rollOnFileSizeLimit: true
+        fileSizeLimitBytes: 52428800
+        retainedFileCountLimit: 100
+        path: Logs/log-.log
